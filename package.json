@@ -1,0 +1,20 @@
+{
+  "name": "pub-quiz-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mobile-first pub quiz web app with QR entry, session management, and live leaderboard",
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,client -c blue,green \"npm -w server run dev\" \"npm -w client run dev\"",
+    "build": "npm -w client run build && npm -w server run build",
+    "start": "npm -w server run start",
+    "test": "npm -w server run test",
+    "qr": "npm -w server run qr"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
