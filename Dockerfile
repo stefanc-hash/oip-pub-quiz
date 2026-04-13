@@ -36,6 +36,7 @@ COPY --from=builder --chown=node:node /app/package.json ./
 COPY --from=builder --chown=node:node /app/node_modules ./node_modules
 COPY --from=builder --chown=node:node /app/server/package.json ./server/
 COPY --from=builder --chown=node:node /app/server/dist ./server/dist
+COPY --from=builder --chown=node:node /app/server/src/db/schema.sql ./server/dist/db/
 COPY --from=builder --chown=node:node /app/client/dist ./client/dist
 
 USER node
