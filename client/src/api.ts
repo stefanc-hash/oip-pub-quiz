@@ -88,11 +88,18 @@ export const adminApi = {
 
   // Questions
   listQuestions: () => req<AdminQuestion[]>('/api/admin/questions'),
+  createQuestion: (patch: Omit<AdminQuestion, 'id'>) =>
+    req<AdminQuestion>('/api/admin/questions', {
+      method: 'POST',
+      body: JSON.stringify(patch),
+    }),
   updateQuestion: (id: string, patch: Omit<AdminQuestion, 'id'>) =>
     req<AdminQuestion>(`/api/admin/questions/${id}`, {
       method: 'PUT',
       body: JSON.stringify(patch),
     }),
+  deleteQuestion: (id: string) =>
+    req<null>(`/api/admin/questions/${id}`, { method: 'DELETE' }),
 };
 
 export { ApiError };

@@ -30,6 +30,50 @@ export async function adminQuestionsRoutes(
     }));
   });
 
+  app.post<{ Body: QuestionBody }>(
+    '/api/admin/questions',
+    {
+      schema: {
+        body: {
+          type: 'object',
+          required: ['prompt', 'options', 'correctIndex', 'explanation'],
+          properties: {
+            prompt:       { type: 'string', minLength: 1 },
+            options:      { type: 'array', items: { type: 'string', minLength: 1 }, minItems: 2, maxItems: 4 },
+            correctIndex: { type: 'integer', minimum: 0, maximum: 3 },
+            explanation:  { type: 'string', minLength: 1 },
+          },
+          additionalProperties: false,
+        },
+      },
+    },
+    async (req, reply) => {
+      const { prompt, options, correctIndex, explanation } = req.body;
+      if (correctIndex >= options.length) {
+        return reply.code(400).send({ error: 'correctIndex out of range for options array' });
+      }
+      const created = questionRepo.create({ prompt, options, correctIndex, explanation });
+      content.reload();
+      return reply.code(201).send({
+        id: created.id,
+        prompt: created.prompt,
+        options: created.options,
+        correctIndex: created.correctIndex,
+        explanation: created.explanation,
+      });
+    },
+  );
+
+  app.delete<{ Params: IdParams }>('/api/admin/questions/:id', async (req, reply) => {
+    const { id } = req.params;
+    if (!content.getQuestion(id)) {
+      return reply.code(404).send({ error: `Question ${id} not found` });
+    }
+    questionRepo.delete(id);
+    content.reload();
+    return reply.code(204).send();
+  });
+
   app.put<{ Params: IdParams; Body: QuestionBody }>(
     '/api/admin/questions/:id',
     {

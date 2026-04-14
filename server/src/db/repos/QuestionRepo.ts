@@ -67,6 +67,19 @@ export class QuestionRepo {
     return this.findById(id)!;
   }
 
+  create(data: QuestionPatch, now: number = Date.now()): Question {
+    const id = `q-${now}`;
+    this.db.prepare(
+      `INSERT INTO questions (id, prompt, options, correct_index, explanation, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?)`,
+    ).run(id, data.prompt, JSON.stringify(data.options), data.correctIndex, data.explanation, now);
+    return this.findById(id)!;
+  }
+
+  delete(id: string): void {
+    this.db.prepare('DELETE FROM questions WHERE id = ?').run(id);
+  }
+
   isEmpty(): boolean {
     const row = this.db
       .prepare<[], { n: number }>('SELECT COUNT(*) AS n FROM questions')

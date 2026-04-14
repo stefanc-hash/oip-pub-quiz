@@ -42,8 +42,9 @@ export function Reveal({ question, reveal, selectedIndex, isLast, onNext }: Prop
                 'flex items-center gap-3 rounded-[var(--radius-md)] border px-4 py-3.5',
                 isCorrect
                   ? 'border-[var(--color-correct)] bg-[var(--color-correct)]/10 text-[var(--color-fg)] animate-correct-pulse'
-                  : 'border-[var(--color-border)] bg-[var(--color-bg-elevated)] text-[var(--color-fg-muted)]',
-                isWrongSelected && 'animate-incorrect-shake',
+                  : isWrongSelected
+                    ? 'border-[var(--color-incorrect)] bg-[var(--color-incorrect)]/10 text-[var(--color-fg)] animate-incorrect-shake'
+                    : 'border-[var(--color-border)] bg-[var(--color-bg-elevated)] text-[var(--color-fg-muted)]',
               )}
             >
               <span
@@ -51,10 +52,16 @@ export function Reveal({ question, reveal, selectedIndex, isLast, onNext }: Prop
                   'inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold',
                   isCorrect
                     ? 'bg-[var(--color-correct)] text-[var(--color-correct-fg)]'
-                    : 'bg-[var(--color-bg-elevated-2)]',
+                    : isWrongSelected
+                      ? 'bg-[var(--color-incorrect)] text-[var(--color-incorrect-fg)]'
+                      : 'bg-[var(--color-bg-elevated-2)]',
                 )}
               >
-                {isCorrect ? <Check className="h-4 w-4" strokeWidth={3} /> : String.fromCharCode(65 + i)}
+                {isCorrect
+                  ? <Check className="h-4 w-4" strokeWidth={3} />
+                  : isWrongSelected
+                    ? <X className="h-4 w-4" strokeWidth={3} />
+                    : String.fromCharCode(65 + i)}
               </span>
               <span className="flex-1">{opt}</span>
             </div>
