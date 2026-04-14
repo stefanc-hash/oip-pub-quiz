@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Loader2 } from 'lucide-react';
 import { useTimer } from '@/hooks/useTimer';
 import { AppShell } from '@/components/AppShell';
 import { RadialTimer } from '@/components/RadialTimer';
@@ -37,7 +38,7 @@ export function Question({ question, index, total, questionTimeSeconds, onSubmit
   };
 
   return (
-    <AppShell>
+    <AppShell className="animate-fade-in">
       <header className="flex items-center justify-between">
         <div className="space-y-1">
           <div className="text-xs uppercase tracking-wider text-[var(--color-fg-muted)]">Question</div>
@@ -70,7 +71,9 @@ export function Question({ question, index, total, questionTimeSeconds, onSubmit
             )}
           >
             <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[var(--color-bg)]/30 text-xs font-bold">
-              {String.fromCharCode(65 + i)}
+              {submitted && selected === i
+                ? <Loader2 className="h-4 w-4 animate-spin" />
+                : String.fromCharCode(65 + i)}
             </span>
             <span className="flex-1">{opt}</span>
           </Button>

@@ -43,4 +43,8 @@ export class ParticipantService {
     this.participants.complete(id);
     return this.participants.findById(id) ?? p;
   }
+
+  countBySession(sessionId: number): number {
+    return this.participants.countBySession(sessionId);
+  }
 }

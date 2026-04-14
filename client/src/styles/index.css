@@ -80,3 +80,42 @@
       var(--color-bg);
   }
 }
+
+/* ---------- Animation keyframes ---------- */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes correct-pulse {
+  0%, 100% { box-shadow: none; }
+  50%       { box-shadow: 0 0 0 6px oklch(72% 0.18 150 / 0.35); }
+}
+@keyframes incorrect-shake {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-6px); }
+  75%      { transform: translateX(6px); }
+}
+@keyframes rank-up-flash {
+  0%, 100% { background: transparent; }
+  40%      { background: oklch(72% 0.18 150 / 0.18); }
+}
+
+@utility animate-fade-in {
+  animation: fade-in 220ms ease both;
+}
+@utility animate-scale-in {
+  animation: scale-in 180ms ease both;
+}
+@utility animate-correct-pulse {
+  animation: correct-pulse 500ms ease;
+}
+@utility animate-incorrect-shake {
+  animation: incorrect-shake 300ms ease;
+}
+@utility animate-rank-up {
+  animation: rank-up-flash 800ms ease;
+}

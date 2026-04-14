@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Plus, Play, StopCircle, RotateCcw, Monitor, BarChart3, AlertCircle, LogOut } from 'lucide-react';
+import { Plus, Play, StopCircle, RotateCcw, Monitor, BarChart3, AlertCircle, LogOut, Users, ExternalLink } from 'lucide-react';
 import { adminApi } from '@/api';
 import type { AdminSessionRow } from '@/types';
 import { AppShell } from '@/components/AppShell';
@@ -77,7 +77,12 @@ export function Sessions({ onLogout, username }: Props) {
           <h1 className="text-2xl font-bold tracking-tight">Groups</h1>
         </div>
         <div className="flex gap-2">
-          <QrDialog />
+          <Button asChild variant="secondary" size="sm">
+            <a href="/display" target="_blank" rel="noreferrer">
+              <ExternalLink className="h-4 w-4" />
+              Open Display
+            </a>
+          </Button>
           <Button variant="ghost" size="sm" onClick={onLogout}>
             <LogOut className="h-4 w-4" />
             Sign out
@@ -96,11 +101,20 @@ export function Sessions({ onLogout, username }: Props) {
               {sessions.map(s => {
                 const status = s.isActive ? 'active' : s.endedAt ? 'ended' : 'created';
                 return (
-                  <li key={s.id} className={cn('p-4 flex flex-wrap items-center gap-3', s.isActive && 'bg-[var(--color-primary)]/5')}>
+                  <li key={s.id} className={cn(
+                    'p-4 flex flex-wrap items-center gap-3',
+                    s.isActive
+                      ? 'bg-[var(--color-primary)]/5 ring-2 ring-[var(--color-primary)] rounded-[var(--radius-md)]'
+                      : '',
+                  )}>
                     <div className="flex-1 min-w-[10rem] space-y-1">
                       <div className="flex items-center gap-2">
                         <h3 className="font-semibold">{s.name}</h3>
                         <StatusBadge status={status} />
+                        <span className="flex items-center gap-1 text-xs text-[var(--color-fg-muted)]">
+                          <Users className="h-3 w-3" />
+                          {s.participantCount}
+                        </span>
                       </div>
                       <div className="text-xs text-[var(--color-fg-muted)]">
                         Created {new Date(s.createdAt).toLocaleString()}
@@ -108,6 +122,7 @@ export function Sessions({ onLogout, username }: Props) {
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-1.5">
+                      {s.isActive && <QrDialog />}
                       {!s.isActive && (
                         <Button size="sm" variant="primary" disabled={busy} onClick={() => activate(s.id)}>
                           {s.endedAt ? <RotateCcw className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}

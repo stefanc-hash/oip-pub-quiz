@@ -7,7 +7,7 @@ interface Props { sessionName: string; onJoin: () => void }
 
 export function Landing({ sessionName, onJoin }: Props) {
   return (
-    <AppShell>
+    <AppShell className="animate-fade-in">
       <div className="flex-1 flex flex-col justify-center gap-8 py-12">
         <Badge variant="secondary" className="self-start">
           <Sparkles className="h-3 w-3" />

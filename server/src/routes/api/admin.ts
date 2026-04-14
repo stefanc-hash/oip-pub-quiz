@@ -10,7 +10,7 @@ export async function adminRoutes(
   app: FastifyInstance,
   deps: { services: Services; auth: AuthService },
 ) {
-  const { sessions, leaderboard } = deps.services;
+  const { sessions, leaderboard, participants } = deps.services;
   const guard = makeAuthGuard(deps.auth);
   app.addHook('preHandler', guard);
 
@@ -22,6 +22,7 @@ export async function adminRoutes(
       activatedAt: s.activated_at,
       endedAt: s.ended_at,
       isActive: s.activated_at !== null && s.ended_at === null,
+      participantCount: participants.countBySession(s.id),
     }));
   });
 

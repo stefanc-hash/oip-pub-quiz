@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ListChecks, Clock, MousePointerClick, Zap, Play, AlertCircle } from 'lucide-react';
+import { ListChecks, Clock, MousePointerClick, Zap, Play, AlertCircle, Loader2 } from 'lucide-react';
 import { AppShell } from '@/components/AppShell';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -24,7 +24,7 @@ export function Instructions({ name, totalQuestions, questionTimeSeconds, errorM
   ];
 
   return (
-    <AppShell>
+    <AppShell className="animate-fade-in">
       <div className="space-y-2">
         <h1 className="text-3xl font-bold tracking-tight">Ready, {first}?</h1>
         <p className="text-[var(--color-fg-muted)]">Quick read, then we begin.</p>
@@ -61,7 +61,7 @@ export function Instructions({ name, totalQuestions, questionTimeSeconds, errorM
         disabled={busy && !errorMessage}
         onClick={() => { setBusy(true); onStart(); }}
       >
-        <Play className="h-5 w-5" />
+        {busy && !errorMessage ? <Loader2 className="h-5 w-5 animate-spin" /> : <Play className="h-5 w-5" />}
         {busy && !errorMessage ? 'Starting…' : 'Start'}
       </Button>
     </AppShell>

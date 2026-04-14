@@ -53,4 +53,11 @@ export class ParticipantRepo {
       .prepare('UPDATE participants SET completed_at = ? WHERE id = ? AND completed_at IS NULL')
       .run(now, id);
   }
+
+  countBySession(sessionId: number): number {
+    const row = this.db
+      .prepare<[number], { n: number }>('SELECT COUNT(*) AS n FROM participants WHERE session_id = ?')
+      .get(sessionId);
+    return row?.n ?? 0;
+  }
 }

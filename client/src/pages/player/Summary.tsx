@@ -18,7 +18,7 @@ export function Summary({ name, totalQuestions, ownAnswers, leaderboard }: Props
   const first = name.split(' ')[0] ?? name;
 
   return (
-    <AppShell>
+    <AppShell className="animate-fade-in">
       <div className="flex items-center gap-3">
         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-primary)] text-[var(--color-primary-fg)]">
           <Trophy className="h-6 w-6" />

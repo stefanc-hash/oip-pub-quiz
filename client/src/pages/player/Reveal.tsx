@@ -7,18 +7,19 @@ import type { PublicQuestion, GradedAnswer } from '@/types';
 interface Props {
   question: PublicQuestion;
   reveal: GradedAnswer;
+  selectedIndex: number | null;
   isLast: boolean;
   onNext: () => void;
 }
 
-export function Reveal({ question, reveal, isLast, onNext }: Props) {
+export function Reveal({ question, reveal, selectedIndex, isLast, onNext }: Props) {
   const Icon = reveal.isCorrect ? Check : X;
 
   return (
-    <AppShell>
+    <AppShell className="animate-fade-in">
       <div
         className={cn(
-          'flex items-center gap-3 self-start rounded-full px-4 py-2 font-semibold',
+          'flex items-center gap-3 self-start rounded-full px-4 py-2 font-semibold animate-scale-in',
           reveal.isCorrect
             ? 'bg-[var(--color-correct)] text-[var(--color-correct-fg)]'
             : 'bg-[var(--color-incorrect)] text-[var(--color-incorrect-fg)]',
@@ -33,14 +34,16 @@ export function Reveal({ question, reveal, isLast, onNext }: Props) {
       <div className="flex flex-col gap-2.5">
         {question.options.map((opt, i) => {
           const isCorrect = i === reveal.correctIndex;
+          const isWrongSelected = !reveal.isCorrect && i === selectedIndex;
           return (
             <div
               key={i}
               className={cn(
                 'flex items-center gap-3 rounded-[var(--radius-md)] border px-4 py-3.5',
                 isCorrect
-                  ? 'border-[var(--color-correct)] bg-[var(--color-correct)]/10 text-[var(--color-fg)]'
+                  ? 'border-[var(--color-correct)] bg-[var(--color-correct)]/10 text-[var(--color-fg)] animate-correct-pulse'
                   : 'border-[var(--color-border)] bg-[var(--color-bg-elevated)] text-[var(--color-fg-muted)]',
+                isWrongSelected && 'animate-incorrect-shake',
               )}
             >
               <span

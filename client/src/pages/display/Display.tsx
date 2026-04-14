@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { MoonStar, Trophy, Users, Wifi, WifiOff } from 'lucide-react';
 import { useSSE } from '@/hooks/useSSE';
@@ -20,6 +20,26 @@ export function Display() {
     [sessionId],
   );
   const { lastEvent, connected } = useSSE(url);
+
+  // Track which participants moved up in rank to flash them
+  const prevRanksRef = useRef<Map<number, number>>(new Map());
+  const [flashedIds, setFlashedIds] = useState<Set<number>>(new Set());
+
+  useEffect(() => {
+    if (lastEvent?.event !== 'leaderboard') return;
+    const rows = (lastEvent.data as LeaderboardPayload).rows;
+    const movedUp: number[] = [];
+    for (const row of rows) {
+      const prev = prevRanksRef.current.get(row.participantId);
+      if (prev !== undefined && row.rank < prev) movedUp.push(row.participantId);
+    }
+    prevRanksRef.current = new Map(rows.map(r => [r.participantId, r.rank]));
+    if (movedUp.length > 0) {
+      setFlashedIds(new Set(movedUp));
+      const t = setTimeout(() => setFlashedIds(new Set()), 900);
+      return () => clearTimeout(t);
+    }
+  }, [lastEvent]);
 
   if (!lastEvent) {
     return (
@@ -83,10 +103,11 @@ export function Display() {
             <li
               key={r.participantId}
               className={cn(
-                'grid grid-cols-[5rem_1fr_8rem_8rem] items-center gap-6 rounded-[var(--radius-xl)] px-8 py-6 transition-all',
+                'grid grid-cols-[5rem_1fr_8rem_8rem] items-center gap-6 rounded-[var(--radius-xl)] px-8 py-6 transition-all duration-500',
                 i === 0 && rows[0]!.correctCount > 0
                   ? 'bg-[var(--color-primary)] text-[var(--color-primary-fg)]'
                   : 'bg-[var(--color-bg-elevated)] border border-[var(--color-border)]',
+                flashedIds.has(r.participantId) && 'animate-rank-up',
               )}
             >
               <div className="flex items-center justify-center text-4xl font-black tabular-nums">

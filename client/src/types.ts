@@ -50,6 +50,7 @@ export interface AdminSessionRow {
   activatedAt: number | null;
   endedAt: number | null;
   isActive: boolean;
+  participantCount: number;
 }
 
 export interface AdminResultsResponse {

@@ -99,6 +99,7 @@ export function PlayerApp() {
         <Reveal
           question={state.questions[state.currentIndex]!}
           reveal={state.lastReveal}
+          selectedIndex={state.ownAnswers[state.currentIndex]?.selectedIndex ?? null}
           isLast={state.currentIndex >= state.questions.length - 1}
           onNext={session.goNext}
         />
