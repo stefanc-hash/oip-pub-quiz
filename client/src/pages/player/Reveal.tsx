@@ -8,28 +8,32 @@ interface Props {
   question: PublicQuestion;
   reveal: GradedAnswer;
   selectedIndex: number | null;
+  index: number;
+  total: number;
   isLast: boolean;
   onNext: () => void;
 }
 
-export function Reveal({ question, reveal, selectedIndex, isLast, onNext }: Props) {
+export function Reveal({ question, reveal, selectedIndex, index, total, isLast, onNext }: Props) {
   const Icon = reveal.isCorrect ? Check : X;
 
   return (
     <AppShell className="animate-fade-in">
-      <div
-        className={cn(
-          'flex items-center gap-3 self-start rounded-full px-4 py-2 font-semibold animate-scale-in',
-          reveal.isCorrect
-            ? 'bg-[var(--color-correct)] text-[var(--color-correct-fg)]'
-            : 'bg-[var(--color-incorrect)] text-[var(--color-incorrect-fg)]',
-        )}
-      >
-        <Icon className="h-5 w-5" strokeWidth={3} />
-        {reveal.isCorrect ? 'Correct' : 'Incorrect'}
+      <header className="flex items-center justify-between">
+        <div className="space-y-1">
+          <div className="text-xs uppercase tracking-wider text-[var(--color-fg-muted)]">Question</div>
+          <div className="font-semibold tabular-nums">{index + 1} <span className="text-[var(--color-fg-muted)]">/ {total}</span></div>
+        </div>
+      </header>
+
+      <div className="h-1 w-full overflow-hidden rounded-full bg-[var(--color-bg-elevated)]">
+        <div
+          className="h-full bg-[var(--color-primary)] transition-all"
+          style={{ width: `${((index + 1) / total) * 100}%` }}
+        />
       </div>
 
-      <h1 className="text-2xl font-bold leading-snug">{question.prompt}</h1>
+      <h1 className="text-2xl font-bold leading-snug pt-2">{question.prompt}</h1>
 
       <div className="flex flex-col gap-2.5">
         {question.options.map((opt, i) => {
@@ -67,6 +71,18 @@ export function Reveal({ question, reveal, selectedIndex, isLast, onNext }: Prop
             </div>
           );
         })}
+      </div>
+
+      <div
+        className={cn(
+          'flex items-center gap-3 self-start rounded-full px-4 py-2 font-semibold animate-scale-in',
+          reveal.isCorrect
+            ? 'bg-[var(--color-correct)] text-[var(--color-correct-fg)]'
+            : 'bg-[var(--color-incorrect)] text-[var(--color-incorrect-fg)]',
+        )}
+      >
+        <Icon className="h-5 w-5" strokeWidth={3} />
+        {reveal.isCorrect ? 'Correct' : 'Incorrect'}
       </div>
 
       {reveal.explanation && (
