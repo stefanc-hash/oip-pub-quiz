@@ -58,6 +58,14 @@ export interface AdminResultsResponse {
   leaderboard: LeaderboardRow[];
 }
 
+export interface AdminQuestion {
+  id: string;
+  prompt: string;
+  options: string[];
+  correctIndex: number;
+  explanation: string;
+}
+
 export interface AdminQrResponse {
   url: string;
   host: string;

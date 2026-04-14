@@ -12,6 +12,7 @@ import { sessionsRoutes } from './routes/api/sessions.js';
 import { quizRoutes } from './routes/api/quiz.js';
 import { participantsRoutes } from './routes/api/participants.js';
 import { adminRoutes } from './routes/api/admin.js';
+import { adminQuestionsRoutes } from './routes/api/adminQuestions.js';
 import { authRoutes } from './routes/api/auth.js';
 import { qrRoutes } from './routes/api/qr.js';
 import { displayStreamRoutes } from './routes/sse/display.js';
@@ -80,6 +81,7 @@ export async function buildApp(opts: BuildAppOptions = {}): Promise<FastifyInsta
   await app.register(async (api) => participantsRoutes(api, { services }));
   await app.register(async (api) => authRoutes(api, { auth, isProduction: config.isProduction }));
   await app.register(async (api) => adminRoutes(api, { services, auth }));
+  await app.register(async (api) => adminQuestionsRoutes(api, { services, auth }));
   await app.register(async (api) => qrRoutes(api, { auth }));
   await app.register(async (api) => displayStreamRoutes(api, { services }));
 

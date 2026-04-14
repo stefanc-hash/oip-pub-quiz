@@ -1,7 +1,7 @@
 import type {
   ActiveSession, QuestionsResponse, RegisterResponse,
   GradedAnswer, CompleteResponse, LeaderboardRow,
-  AdminSessionRow, AdminResultsResponse, AdminQrResponse,
+  AdminSessionRow, AdminResultsResponse, AdminQrResponse, AdminQuestion,
 } from './types.js';
 
 class ApiError extends Error {
@@ -85,6 +85,14 @@ export const adminApi = {
     ),
   results: (id: number) => req<AdminResultsResponse>(`/api/admin/sessions/${id}/results`),
   qr: () => req<AdminQrResponse>('/api/admin/qr'),
+
+  // Questions
+  listQuestions: () => req<AdminQuestion[]>('/api/admin/questions'),
+  updateQuestion: (id: string, patch: Omit<AdminQuestion, 'id'>) =>
+    req<AdminQuestion>(`/api/admin/questions/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(patch),
+    }),
 };
 
 export { ApiError };

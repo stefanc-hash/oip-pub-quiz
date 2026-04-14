@@ -37,3 +37,12 @@ CREATE TABLE IF NOT EXISTS answers (
 
 CREATE UNIQUE INDEX IF NOT EXISTS idx_answers_participant_question
   ON answers(participant_id, question_id);
+
+CREATE TABLE IF NOT EXISTS questions (
+  id            TEXT PRIMARY KEY,
+  prompt        TEXT NOT NULL,
+  options       TEXT NOT NULL,       -- JSON array e.g. '["A","B","C","D"]'
+  correct_index INTEGER NOT NULL,
+  explanation   TEXT NOT NULL,
+  updated_at    INTEGER NOT NULL
+);

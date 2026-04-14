@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Plus, Play, StopCircle, RotateCcw, Monitor, BarChart3, AlertCircle, LogOut, Users, ExternalLink } from 'lucide-react';
+import { Plus, Play, StopCircle, RotateCcw, Monitor, BarChart3, AlertCircle, LogOut, Users, ExternalLink, BookOpen } from 'lucide-react';
 import { adminApi } from '@/api';
 import type { AdminSessionRow } from '@/types';
 import { AppShell } from '@/components/AppShell';
@@ -12,9 +12,9 @@ import { QrDialog } from './QrDialog';
 import { Results } from './Results';
 import { cn } from '@/lib/utils';
 
-interface Props { onLogout: () => Promise<void> | void; username: string }
+interface Props { onLogout: () => Promise<void> | void; username: string; onNavigateQuestions: () => void }
 
-export function Sessions({ onLogout, username }: Props) {
+export function Sessions({ onLogout, username, onNavigateQuestions }: Props) {
   const [sessions, setSessions] = useState<AdminSessionRow[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [newName, setNewName] = useState('');
@@ -77,6 +77,10 @@ export function Sessions({ onLogout, username }: Props) {
           <h1 className="text-2xl font-bold tracking-tight">Groups</h1>
         </div>
         <div className="flex gap-2">
+          <Button variant="secondary" size="sm" onClick={onNavigateQuestions}>
+            <BookOpen className="h-4 w-4" />
+            Questions
+          </Button>
           <Button asChild variant="secondary" size="sm">
             <a href="/display" target="_blank" rel="noreferrer">
               <ExternalLink className="h-4 w-4" />
