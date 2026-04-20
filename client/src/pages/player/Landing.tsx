@@ -9,8 +9,7 @@ export function Landing({ sessionName, onJoin }: Props) {
   return (
     <AppShell className="animate-fade-in">
       <div className="flex-1 flex flex-col justify-center gap-8 py-12">
-        <img src="/logo.png" alt="Logo" className="w-20 h-20 rounded-2xl self-start" />
-        <Badge variant="secondary" className="self-start">
+<Badge variant="secondary" className="self-start">
           <Sparkles className="h-3 w-3" />
           Live now
         </Badge>
