@@ -1,7 +1,7 @@
-import { Sparkles, ArrowRight } from ‘lucide-react’;
-import { Button } from ‘@/components/ui/button’;
-import { Badge } from ‘@/components/ui/badge’;
-import { AppShell } from ‘@/components/AppShell’;
+import { Sparkles, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { AppShell } from '@/components/AppShell';
 
 interface Props { sessionName: string; onJoin: () => void }
 
@@ -17,7 +17,7 @@ export function Landing({ sessionName, onJoin }: Props) {
         <div className="space-y-3">
           <h1 className="text-5xl font-bold tracking-tight">Pub Quiz</h1>
           <p className="text-lg text-[var(--color-fg-muted)]">
-            You’re joining <strong className="text-[var(--color-primary)]">{sessionName}</strong>
+            You're joining <strong className="text-[var(--color-primary)]">{sessionName}</strong>
           </p>
         </div>
       </div>
