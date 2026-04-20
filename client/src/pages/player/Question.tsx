@@ -39,17 +39,23 @@ export function Question({ question, index, total, questionTimeSeconds, onSubmit
 
   return (
     <AppShell className="animate-fade-in">
-      <header className="flex items-center justify-between">
-        <div className="space-y-1">
+      {/* Header: counter left | timer centre | spacer right */}
+      <header className="grid grid-cols-3 items-center">
+        <div className="space-y-0.5">
           <div className="text-xs uppercase tracking-wider text-[var(--color-fg-muted)]">Question</div>
-          <div className="font-semibold tabular-nums">{index + 1} <span className="text-[var(--color-fg-muted)]">/ {total}</span></div>
+          <div className="font-semibold tabular-nums text-sm">
+            {index + 1} <span className="text-[var(--color-fg-muted)]">/ {total}</span>
+          </div>
         </div>
-        <RadialTimer secondsLeft={secondsLeft} totalSeconds={questionTimeSeconds} />
+        <div className="flex justify-center">
+          <RadialTimer secondsLeft={secondsLeft} totalSeconds={questionTimeSeconds} />
+        </div>
+        <div />
       </header>
 
-      <div className="h-1 w-full overflow-hidden rounded-full bg-[var(--color-bg-elevated)]">
+      <div className="h-0.5 w-full overflow-hidden rounded-full bg-[var(--color-bg-elevated)]">
         <div
-          className="h-full bg-[var(--color-primary)] transition-all"
+          className="h-full bg-[var(--color-primary)] transition-all duration-500"
           style={{ width: `${((index + 1) / total) * 100}%` }}
         />
       </div>
@@ -67,12 +73,14 @@ export function Question({ question, index, total, questionTimeSeconds, onSubmit
             className={cn(
               'justify-start text-left px-5 h-auto py-4 whitespace-normal',
               'text-base',
-              selected === i ? 'ring-2 ring-[var(--color-primary)] ring-offset-2 ring-offset-[var(--color-bg)]' : '',
+              selected === i
+                ? 'ring-1 ring-[var(--color-primary)]/60 ring-offset-1 ring-offset-[var(--color-bg)]'
+                : '',
             )}
           >
-            <span className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[var(--color-bg)]/30 text-xs font-bold">
+            <span className="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[var(--color-bg)]/25 text-xs font-semibold">
               {submitted && selected === i
-                ? <Loader2 className="h-4 w-4 animate-spin" />
+                ? <Loader2 className="h-3.5 w-3.5 animate-spin" />
                 : String.fromCharCode(65 + i)}
             </span>
             <span className="flex-1">{opt}</span>
