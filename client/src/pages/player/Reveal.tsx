@@ -91,7 +91,7 @@ export function Reveal({ question, reveal, selectedIndex, index, total, isLast, 
 
       {reveal.explanation && (
         <div className="rounded-[var(--radius-md)] bg-[var(--color-bg-elevated-2)] border border-[var(--color-border)] p-4 text-sm leading-relaxed text-[var(--color-fg-muted)]">
-          <div className="text-xs uppercase tracking-wider text-[var(--color-fg-muted)]/60 mb-1.5">Explanation</div>
+          <div className="text-xs uppercase tracking-wider text-[var(--color-fg-muted)]/60 mb-1.5">Interesting Fact</div>
           {reveal.explanation}
         </div>
       )}

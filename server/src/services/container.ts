@@ -29,10 +29,8 @@ export function buildServices(opts: { dbPath: string }): Services {
   const answerRepo = new AnswerRepo(db);
   const questionRepo = new QuestionRepo(db);
 
-  // Seed questions on first boot (idempotent — INSERT OR IGNORE)
-  if (questionRepo.isEmpty()) {
-    questionRepo.seedAll(QUESTIONS);
-  }
+  // Upsert canonical questions on every boot (INSERT OR REPLACE keeps questions.ts as source of truth)
+  questionRepo.seedAll(QUESTIONS);
 
   const bus = new EventBus();
   const content = new DatabaseQuizContent(questionRepo);

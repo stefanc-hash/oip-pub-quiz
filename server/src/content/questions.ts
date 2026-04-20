@@ -1,151 +1,115 @@
 import type { Question } from './QuizContentSource.js';
 
 /**
- * Hardcoded quiz content. Keep question ids stable — they are persisted
- * in the answers table and used for grading replay.
- *
- * To change content: edit this file, rebuild, restart. No migration needed.
+ * Canonical question list — source of truth.
+ * On every server start, seedAll() upserts these into the DB (INSERT OR REPLACE).
+ * Admin UI edits to IDs not listed here are preserved.
  */
 export const QUESTIONS: readonly Question[] = [
+  // ─── Serbia round ───────────────────────────────────────────────────────────
   {
-    id: 'q-001',
-    prompt: 'Which planet is known as the Red Planet?',
-    options: ['Venus', 'Mars', 'Jupiter', 'Saturn'],
-    correctIndex: 1,
-    explanation: 'Mars appears red because of iron oxide (rust) on its surface.',
-  },
-  {
-    id: 'q-002',
-    prompt: 'True or False: The Great Wall of China is visible from space with the naked eye.',
-    options: ['True', 'False'],
-    correctIndex: 1,
-    explanation: 'It is not. The wall is long but too narrow to resolve from orbit unaided.',
-  },
-  {
-    id: 'q-003',
-    prompt: 'Who painted the Mona Lisa?',
-    options: ['Michelangelo', 'Raphael', 'Leonardo da Vinci', 'Donatello'],
+    id: 'q-s01',
+    prompt: 'What is the capital city of Serbia?',
+    options: ['Zagreb', 'Sarajevo', 'Belgrade', 'Novi Sad'],
     correctIndex: 2,
-    explanation: 'Leonardo painted it between ~1503 and 1519. It now hangs in the Louvre.',
+    explanation:
+      "Belgrade is one of the oldest cities in Europe, continuously inhabited for over 7,000 years. It sits at the confluence of the Sava and Danube rivers and has been destroyed and rebuilt over 40 times throughout history — earning it the nickname 'The City of the Rising Phoenix.'",
   },
   {
-    id: 'q-004',
-    prompt: 'What is the chemical symbol for gold?',
-    options: ['Gd', 'Go', 'Au', 'Ag'],
-    correctIndex: 2,
-    explanation: 'Au, from the Latin aurum.',
-  },
-  {
-    id: 'q-005',
-    prompt: 'Which ocean is the largest by area?',
-    options: ['Atlantic', 'Indian', 'Arctic', 'Pacific'],
+    id: 'q-s02',
+    prompt: 'Which famous tennis player was born in Belgrade, Serbia?',
+    options: ['Rafael Nadal', 'Roger Federer', 'Andy Murray', 'Novak Djokovic'],
     correctIndex: 3,
-    explanation: 'The Pacific covers roughly a third of the planet\u2019s surface.',
+    explanation:
+      'Born in Belgrade in 1987, Djokovic holds the record for most weeks ranked world No. 1 in men\'s tennis history. He learned to play on a makeshift court near a ski resort and has won more Grand Slam singles titles than any man in history.',
   },
   {
-    id: 'q-006',
-    prompt: 'True or False: Bananas are botanically classified as berries.',
-    options: ['True', 'False'],
-    correctIndex: 0,
-    explanation: 'Yes — bananas meet the botanical definition of a berry. Strawberries do not.',
+    id: 'q-s03',
+    prompt: 'On which river does the Serbian capital Belgrade sit?',
+    options: ['Danube only', 'Drina', 'Morava', 'Sava and Danube'],
+    correctIndex: 3,
+    explanation:
+      "Belgrade sits exactly where the Sava flows into the Danube. The name 'Belgrade' literally means 'White City' (Beo = white, grad = city). The ancient fortress Kalemegdan sits at that confluence and has been a strategic military position for over 2,000 years.",
   },
   {
-    id: 'q-007',
-    prompt: 'How many bones are in the adult human body?',
-    options: ['196', '206', '216', '226'],
-    correctIndex: 1,
-    explanation: 'Adults have 206 bones; newborns have around 270, which fuse over time.',
-  },
-  {
-    id: 'q-008',
-    prompt: 'Which country is home to the kangaroo?',
-    options: ['New Zealand', 'South Africa', 'Australia', 'Argentina'],
+    id: 'q-s04',
+    prompt: 'Which inventor, famous for alternating current (AC) electricity, was born in Serbia?',
+    options: ['Thomas Edison', 'Guglielmo Marconi', 'Nikola Tesla', 'Alexander Graham Bell'],
     correctIndex: 2,
-    explanation: 'Kangaroos are native to Australia.',
+    explanation:
+      'Nikola Tesla was born in 1856 in a small Serbian village called Smiljan. He spoke eight languages, had a photographic memory, and reportedly never slept more than two hours a night. Despite his revolutionary contributions to modern electricity, he died broke and largely forgotten in a New York hotel room.',
   },
+
+  // ─── OIP Insurtech round ────────────────────────────────────────────────────
   {
-    id: 'q-009',
-    prompt: 'What year did humans first land on the Moon?',
-    options: ['1965', '1969', '1972', '1975'],
-    correctIndex: 1,
-    explanation: 'Apollo 11 landed on July 20, 1969.',
-  },
-  {
-    id: 'q-010',
-    prompt: 'True or False: Lightning never strikes the same place twice.',
-    options: ['True', 'False'],
-    correctIndex: 1,
-    explanation: 'It absolutely does — the Empire State Building is hit dozens of times a year.',
-  },
-  // ─── placeholder questions, easy to revisit/replace later ───
-  {
-    id: 'q-011',
-    prompt: 'PLACEHOLDER: What is the capital of France?',
-    options: ['London', 'Paris', 'Berlin', 'Madrid'],
-    correctIndex: 1,
-    explanation: 'Paris.',
-  },
-  {
-    id: 'q-012',
-    prompt: 'PLACEHOLDER: True or False — Mount Everest is in the Andes.',
-    options: ['True', 'False'],
-    correctIndex: 1,
-    explanation: 'It is in the Himalayas, on the Nepal/China border.',
-  },
-  {
-    id: 'q-013',
-    prompt: 'PLACEHOLDER: Which language has the most native speakers worldwide?',
-    options: ['English', 'Spanish', 'Mandarin Chinese', 'Hindi'],
+    id: 'q-oip01',
+    prompt: "What is OIP Insurtech's AI product that automates insurance workflows?",
+    options: ['FlowAI', 'PolicyPilot', 'BoundAI', 'InsurBot'],
     correctIndex: 2,
-    explanation: 'Mandarin Chinese, by a wide margin.',
+    explanation:
+      "BoundAI is OIP Insurtech's flagship AI platform. It structures the full insurance workflow from submission to bind — ingesting documents, classifying them, and writing structured output directly back to your systems. No shadow systems. No rip-and-replace.",
   },
   {
-    id: 'q-014',
-    prompt: 'PLACEHOLDER: How many continents are there?',
-    options: ['5', '6', '7', '8'],
+    id: 'q-oip02',
+    prompt: "When does a human reviewer step into BoundAI's processing pipeline?",
+    options: [
+      'After every document is processed',
+      'Only at the submission intake stage',
+      'Never — it\'s fully automated',
+      'Only on exceptions and low-confidence cases',
+    ],
+    correctIndex: 3,
+    explanation:
+      "BoundAI's Human-in-the-Loop (HITL) step is triggered only when the machine flags uncertainty. Reviewers are experienced insurance professionals — not generic QA staff. They correct edge cases and keep the pipeline auditable without slowing down clean cases.",
+  },
+  {
+    id: 'q-oip03',
+    prompt: "What is BoundAI's typical production go-live timeline?",
+    options: ['3–6 months', '6–12 months', '~90 days', 'It varies — no standard timeline'],
     correctIndex: 2,
-    explanation: 'Seven, in the most common model.',
+    explanation:
+      '~90 days to full production — not a pilot, not a POC. BoundAI deploys inside the systems you already run — PAS, AMS, CRM, DMS — with no infrastructure replacement required.',
   },
   {
-    id: 'q-015',
-    prompt: 'PLACEHOLDER: True or False — a tomato is a fruit.',
-    options: ['True', 'False'],
-    correctIndex: 0,
-    explanation: 'Botanically, yes — it develops from the flower\u2019s ovary and contains seeds.',
+    id: 'q-oip04',
+    prompt: 'Which of the following is NOT a processing flow supported by BoundAI?',
+    options: ['Loss Run Analysis', 'SOV Processing', 'Inspection Review', 'Claims Adjudication'],
+    correctIndex: 3,
+    explanation:
+      "Claims Adjudication is not a BoundAI flow. BoundAI focuses on the underwriting and distribution side: Submissions Processing, Loss Run Analysis, SOV (Carrier & Broker), Email Extraction, Inspection Review, and custom document workflows.",
   },
   {
-    id: 'q-016',
-    prompt: 'PLACEHOLDER: Which element has the chemical symbol "O"?',
-    options: ['Osmium', 'Oxygen', 'Gold', 'Iron'],
-    correctIndex: 1,
-    explanation: 'Oxygen.',
+    id: 'q-oip05',
+    prompt: 'OIP Insurtech offers three ways to engage their delivery teams. Which set is correct?',
+    options: [
+      'Onshore, Offshore, Nearshore',
+      'Sprint, Agile, Waterfall',
+      'Team-as-a-Service, Distributed Teams, Autonomous Delivery',
+      'Fixed, Flexible, Fractional',
+    ],
+    correctIndex: 2,
+    explanation:
+      "Three shapes, one bench. Team-as-a-Service gives you dedicated pods with OIP's ops muscle. Distributed Teams embed directly into your engineering structure. Autonomous Delivery is fixed-scope, outcome-linked delivery.",
   },
   {
-    id: 'q-017',
-    prompt: 'PLACEHOLDER: Who wrote "Romeo and Juliet"?',
-    options: ['Charles Dickens', 'William Shakespeare', 'Jane Austen', 'Mark Twain'],
-    correctIndex: 1,
-    explanation: 'William Shakespeare, around 1595.',
+    id: 'q-oip06',
+    prompt: 'How many hours of technology delivery has OIP Insurtech shipped?',
+    options: ['250,000+', '500,000+', '750,000+', '1,000,000+'],
+    correctIndex: 3,
+    explanation:
+      'Over 1 million hours of technology delivery shipped. With 1,500+ professionals and a 100% insurance-trained talent pipeline, OIP teams ramp in under 30 days — because insurance is where engineers start on day one.',
   },
   {
-    id: 'q-018',
-    prompt: 'PLACEHOLDER: How many sides does a hexagon have?',
-    options: ['5', '6', '7', '8'],
-    correctIndex: 1,
-    explanation: 'Six.',
-  },
-  {
-    id: 'q-019',
-    prompt: 'PLACEHOLDER: True or False — sound travels faster in water than in air.',
-    options: ['True', 'False'],
-    correctIndex: 0,
-    explanation: 'Yes, roughly four times faster.',
-  },
-  {
-    id: 'q-020',
-    prompt: 'PLACEHOLDER: What is the largest planet in our solar system?',
-    options: ['Saturn', 'Jupiter', 'Neptune', 'Earth'],
-    correctIndex: 1,
-    explanation: 'Jupiter.',
+    id: 'q-oip07',
+    prompt: "What does OIP Insurtech's Center of Excellence (CoE) model offer clients?",
+    options: [
+      'A one-time system audit and report',
+      'Software licensing with annual renewals',
+      'A dedicated offshore team that hands off on contract end',
+      'Running an internal CoE until the client team is ready to own it',
+    ],
+    correctIndex: 3,
+    explanation:
+      "OIP builds and runs the CoE inside your organization, then transfers ownership when your team is ready. The best programs don't end at go-live — OIP stays to harden, extend, and hand over capability that actually sticks.",
   },
 ];

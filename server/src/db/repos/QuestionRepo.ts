@@ -44,10 +44,10 @@ export class QuestionRepo {
     return row ? rowToQuestion(row) : undefined;
   }
 
-  /** Bulk-insert from seed data. INSERT OR IGNORE makes this idempotent. */
+  /** Upsert from seed data. INSERT OR REPLACE keeps questions.ts as source of truth. */
   seedAll(questions: readonly Question[], now: number = Date.now()): void {
     const stmt = this.db.prepare(
-      `INSERT OR IGNORE INTO questions (id, prompt, options, correct_index, explanation, updated_at)
+      `INSERT OR REPLACE INTO questions (id, prompt, options, correct_index, explanation, updated_at)
        VALUES (?, ?, ?, ?, ?, ?)`,
     );
     const run = this.db.transaction((qs: readonly Question[]) => {
