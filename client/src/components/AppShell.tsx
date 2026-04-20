@@ -24,6 +24,14 @@ export function AppShell({ children, className, variant = 'narrow' }: Props) {
         className,
       )}
     >
+      {/* Brand watermark — fixed top-right, visible but unobtrusive */}
+      <div className="fixed top-3 right-4 z-50 pointer-events-none select-none">
+        <img
+          src="/oip-logo.png"
+          alt="OIP Insurtech"
+          className="h-8 sm:h-10 w-auto opacity-70"
+        />
+      </div>
       {children}
     </main>
   );
