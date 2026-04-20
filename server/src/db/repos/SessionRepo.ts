@@ -54,4 +54,11 @@ export class SessionRepo {
       .prepare('UPDATE sessions SET ended_at = ? WHERE id = ?')
       .run(now, id);
   }
+
+  delete(id: number): void {
+    // Cascade: answers -> participants -> session (FK enforcement is on)
+    this.db.prepare('DELETE FROM answers WHERE participant_id IN (SELECT id FROM participants WHERE session_id = ?)').run(id);
+    this.db.prepare('DELETE FROM participants WHERE session_id = ?').run(id);
+    this.db.prepare('DELETE FROM sessions WHERE id = ?').run(id);
+  }
 }

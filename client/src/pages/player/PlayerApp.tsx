@@ -32,7 +32,7 @@ export function PlayerApp() {
             </div>
             <h1 className="text-2xl font-bold tracking-tight">No active session</h1>
             <p className="text-[var(--color-fg-muted)] max-w-xs">
-              Check with the organiser — they’ll start the next round shortly.
+              Check with the organiser - they’ll start the next round shortly.
             </p>
           </div>
         </AppShell>

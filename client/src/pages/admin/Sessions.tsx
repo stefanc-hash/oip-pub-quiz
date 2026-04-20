@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Plus, Play, StopCircle, RotateCcw, Monitor, BarChart3, AlertCircle, LogOut, Users, ExternalLink, BookOpen } from 'lucide-react';
+import { Plus, Play, StopCircle, RotateCcw, Monitor, BarChart3, AlertCircle, LogOut, Users, ExternalLink, BookOpen, Trash2 } from 'lucide-react';
 import { adminApi } from '@/api';
 import type { AdminSessionRow } from '@/types';
 import { AppShell } from '@/components/AppShell';
@@ -56,6 +56,11 @@ export function Sessions({ onLogout, username, onNavigateQuestions }: Props) {
   async function endSession(id: number) {
     setBusy(true);
     try { await adminApi.end(id); await refresh(); } finally { setBusy(false); }
+  }
+  async function deleteSession(id: number, name: string) {
+    if (!window.confirm(`Delete "${name}" and all its data? This cannot be undone.`)) return;
+    setBusy(true);
+    try { await adminApi.deleteSession(id); await refresh(); } finally { setBusy(false); }
   }
   async function create(e: React.FormEvent) {
     e.preventDefault();
@@ -149,6 +154,12 @@ export function Sessions({ onLogout, username, onNavigateQuestions }: Props) {
                         <BarChart3 className="h-3.5 w-3.5" />
                         Results
                       </Button>
+                      {!s.isActive && (
+                        <Button size="sm" variant="ghost" disabled={busy} onClick={() => deleteSession(s.id, s.name)}
+                          className="text-[var(--color-incorrect)] hover:text-[var(--color-incorrect)] hover:bg-[var(--color-incorrect)]/10">
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </Button>
+                      )}
                     </div>
                   </li>
                 );

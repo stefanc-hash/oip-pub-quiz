@@ -63,4 +63,11 @@ export class SessionService {
     if (wasActive) this.bus?.emitGlobalEvent({ type: 'active-session-changed' });
     return this.sessions.findById(id)!;
   }
+
+  delete(id: number): void {
+    const target = this.getById(id); // throws if missing
+    const wasActive = target.activated_at !== null && target.ended_at === null;
+    this.sessions.delete(id);
+    if (wasActive) this.bus?.emitGlobalEvent({ type: 'active-session-changed' });
+  }
 }

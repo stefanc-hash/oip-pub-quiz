@@ -83,6 +83,8 @@ export const adminApi = {
     req<{ id: number; endedAt: number }>(
       `/api/admin/sessions/${id}/end`, { method: 'POST' },
     ),
+  deleteSession: (id: number) =>
+    req<null>(`/api/admin/sessions/${id}`, { method: 'DELETE' }),
   results: (id: number) => req<AdminResultsResponse>(`/api/admin/sessions/${id}/results`),
   qr: () => req<AdminQrResponse>('/api/admin/qr'),
 

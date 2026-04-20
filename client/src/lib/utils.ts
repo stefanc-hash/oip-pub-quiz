@@ -6,6 +6,6 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatSeconds(ms: number | null): string {
-  if (ms === null) return '—';
+  if (ms === null) return '-';
   return `${(ms / 1000).toFixed(1)}s`;
 }

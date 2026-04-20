@@ -1,19 +1,19 @@
 import type { Question } from './QuizContentSource.js';
 
 /**
- * Canonical question list — source of truth.
+ * Canonical question list - source of truth.
  * On every server start, seedAll() upserts these into the DB (INSERT OR REPLACE).
  * Admin UI edits to IDs not listed here are preserved.
  */
 export const QUESTIONS: readonly Question[] = [
-  // ─── Serbia round ───────────────────────────────────────────────────────────
+  // --- Serbia round ---
   {
     id: 'q-s01',
     prompt: 'What is the capital city of Serbia?',
     options: ['Zagreb', 'Sarajevo', 'Belgrade', 'Novi Sad'],
     correctIndex: 2,
     explanation:
-      "Belgrade is one of the oldest cities in Europe, continuously inhabited for over 7,000 years. It sits at the confluence of the Sava and Danube rivers and has been destroyed and rebuilt over 40 times throughout history — earning it the nickname 'The City of the Rising Phoenix.'",
+      "Belgrade is one of the oldest cities in Europe, continuously inhabited for over 7,000 years. It sits at the confluence of the Sava and Danube rivers and has been destroyed and rebuilt over 40 times throughout history - earning it the nickname 'The City of the Rising Phoenix.'",
   },
   {
     id: 'q-s02',
@@ -21,7 +21,7 @@ export const QUESTIONS: readonly Question[] = [
     options: ['Rafael Nadal', 'Roger Federer', 'Andy Murray', 'Novak Djokovic'],
     correctIndex: 3,
     explanation:
-      'Born in Belgrade in 1987, Djokovic holds the record for most weeks ranked world No. 1 in men\'s tennis history. He learned to play on a makeshift court near a ski resort and has won more Grand Slam singles titles than any man in history.',
+      "Born in Belgrade in 1987, Djokovic holds the record for most weeks ranked world No. 1 in men's tennis history. He learned to play on a makeshift court near a ski resort and has won more Grand Slam singles titles than any man in history.",
   },
   {
     id: 'q-s03',
@@ -40,14 +40,14 @@ export const QUESTIONS: readonly Question[] = [
       'Nikola Tesla was born in 1856 in a small Serbian village called Smiljan. He spoke eight languages, had a photographic memory, and reportedly never slept more than two hours a night. Despite his revolutionary contributions to modern electricity, he died broke and largely forgotten in a New York hotel room.',
   },
 
-  // ─── OIP Insurtech round ────────────────────────────────────────────────────
+  // --- OIP Insurtech round ---
   {
     id: 'q-oip01',
     prompt: "What is OIP Insurtech's AI product that automates insurance workflows?",
     options: ['FlowAI', 'PolicyPilot', 'BoundAI', 'InsurBot'],
     correctIndex: 2,
     explanation:
-      "BoundAI is OIP Insurtech's flagship AI platform. It structures the full insurance workflow from submission to bind — ingesting documents, classifying them, and writing structured output directly back to your systems. No shadow systems. No rip-and-replace.",
+      "BoundAI is OIP Insurtech's flagship AI platform. It structures the full insurance workflow from submission to bind - ingesting documents, classifying them, and writing structured output directly back to your systems. No shadow systems. No rip-and-replace.",
   },
   {
     id: 'q-oip02',
@@ -55,20 +55,20 @@ export const QUESTIONS: readonly Question[] = [
     options: [
       'After every document is processed',
       'Only at the submission intake stage',
-      'Never — it\'s fully automated',
+      "Never - it's fully automated",
       'Only on exceptions and low-confidence cases',
     ],
     correctIndex: 3,
     explanation:
-      "BoundAI's Human-in-the-Loop (HITL) step is triggered only when the machine flags uncertainty. Reviewers are experienced insurance professionals — not generic QA staff. They correct edge cases and keep the pipeline auditable without slowing down clean cases.",
+      "BoundAI's Human-in-the-Loop (HITL) step is triggered only when the machine flags uncertainty. Reviewers are experienced insurance professionals - not generic QA staff. They correct edge cases and keep the pipeline auditable without slowing down clean cases.",
   },
   {
     id: 'q-oip03',
     prompt: "What is BoundAI's typical production go-live timeline?",
-    options: ['3–6 months', '6–12 months', '~90 days', 'It varies — no standard timeline'],
+    options: ['3-6 months', '6-12 months', '~90 days', 'It varies - no standard timeline'],
     correctIndex: 2,
     explanation:
-      '~90 days to full production — not a pilot, not a POC. BoundAI deploys inside the systems you already run — PAS, AMS, CRM, DMS — with no infrastructure replacement required.',
+      '~90 days to full production - not a pilot, not a POC. BoundAI deploys inside the systems you already run - PAS, AMS, CRM, DMS - with no infrastructure replacement required.',
   },
   {
     id: 'q-oip04',
@@ -97,7 +97,7 @@ export const QUESTIONS: readonly Question[] = [
     options: ['250,000+', '500,000+', '750,000+', '1,000,000+'],
     correctIndex: 3,
     explanation:
-      'Over 1 million hours of technology delivery shipped. With 1,500+ professionals and a 100% insurance-trained talent pipeline, OIP teams ramp in under 30 days — because insurance is where engineers start on day one.',
+      'Over 1 million hours of technology delivery shipped. With 1,500+ professionals and a 100% insurance-trained talent pipeline, OIP teams ramp in under 30 days - because insurance is where engineers start on day one.',
   },
   {
     id: 'q-oip07',
@@ -110,6 +110,6 @@ export const QUESTIONS: readonly Question[] = [
     ],
     correctIndex: 3,
     explanation:
-      "OIP builds and runs the CoE inside your organization, then transfers ownership when your team is ready. The best programs don't end at go-live — OIP stays to harden, extend, and hand over capability that actually sticks.",
+      "OIP builds and runs the CoE inside your organization, then transfers ownership when your team is ready. The best programs don't end at go-live - OIP stays to harden, extend, and hand over capability that actually sticks.",
   },
 ];

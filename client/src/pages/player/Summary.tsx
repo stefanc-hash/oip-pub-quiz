@@ -36,7 +36,7 @@ export function Summary({ name, totalQuestions, ownAnswers, leaderboard }: Props
           label="Avg time"
           value={formatSeconds(own?.avgResponseTimeMsOnCorrect ?? null)}
         />
-        <Stat icon={Hash} label="Rank" value={own ? `#${own.rank}` : '—'} />
+        <Stat icon={Hash} label="Rank" value={own ? `#${own.rank}` : '-'} />
       </div>
 
       <div className="space-y-3">

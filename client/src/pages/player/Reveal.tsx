@@ -26,19 +26,6 @@ export function Reveal({ question, reveal, selectedIndex, index, total, isLast, 
             {index + 1} <span className="text-[var(--color-fg-muted)]">/ {total}</span>
           </div>
         </div>
-
-        {/* Subtle result badge */}
-        <div
-          className={cn(
-            'flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium tracking-wide animate-scale-in',
-            reveal.isCorrect
-              ? 'border-[var(--color-correct)]/40 bg-[var(--color-correct)]/10 text-[var(--color-correct)]'
-              : 'border-[var(--color-incorrect)]/40 bg-[var(--color-incorrect)]/10 text-[var(--color-incorrect)]',
-          )}
-        >
-          <Icon className="h-3.5 w-3.5" strokeWidth={2.5} />
-          {reveal.isCorrect ? 'Correct' : 'Incorrect'}
-        </div>
       </header>
 
       <div className="h-0.5 w-full overflow-hidden rounded-full bg-[var(--color-bg-elevated)]">
@@ -46,6 +33,19 @@ export function Reveal({ question, reveal, selectedIndex, index, total, isLast, 
           className="h-full bg-[var(--color-primary)] transition-all duration-500"
           style={{ width: `${((index + 1) / total) * 100}%` }}
         />
+      </div>
+
+      {/* Result badge - below progress bar, safely away from the fixed logo */}
+      <div
+        className={cn(
+          'flex items-center gap-1.5 self-start rounded-full border px-3 py-1 text-xs font-medium tracking-wide animate-scale-in',
+          reveal.isCorrect
+            ? 'border-[var(--color-correct)]/40 bg-[var(--color-correct)]/10 text-[var(--color-correct)]'
+            : 'border-[var(--color-incorrect)]/40 bg-[var(--color-incorrect)]/10 text-[var(--color-incorrect)]',
+        )}
+      >
+        <Icon className="h-3.5 w-3.5" strokeWidth={2.5} />
+        {reveal.isCorrect ? 'Correct' : 'Incorrect'}
       </div>
 
       <h1 className="text-2xl font-bold leading-snug pt-2">{question.prompt}</h1>

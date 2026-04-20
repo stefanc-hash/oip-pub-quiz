@@ -49,6 +49,11 @@ export async function adminRoutes(
     return { id: s.id, endedAt: s.ended_at };
   });
 
+  app.delete<{ Params: IdParams }>('/api/admin/sessions/:id', async (req, reply) => {
+    sessions.delete(Number(req.params.id));
+    return reply.status(204).send();
+  });
+
   app.get<{ Params: IdParams }>('/api/admin/sessions/:id/results', async (req) => {
     const sessionId = Number(req.params.id);
     const session = sessions.getById(sessionId);
