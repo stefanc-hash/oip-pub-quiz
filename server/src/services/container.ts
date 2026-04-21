@@ -29,8 +29,9 @@ export function buildServices(opts: { dbPath: string }): Services {
   const answerRepo = new AnswerRepo(db);
   const questionRepo = new QuestionRepo(db);
 
-  // Upsert canonical questions on every boot (INSERT OR REPLACE keeps questions.ts as source of truth)
+  // Upsert canonical questions and remove any stale IDs on every boot
   questionRepo.seedAll(QUESTIONS);
+  questionRepo.pruneStale(QUESTIONS.map(q => q.id));
 
   const bus = new EventBus();
   const content = new DatabaseQuizContent(questionRepo);

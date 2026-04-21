@@ -80,6 +80,15 @@ export class QuestionRepo {
     this.db.prepare('DELETE FROM questions WHERE id = ?').run(id);
   }
 
+  /** Remove any question whose ID is not in the canonical set. */
+  pruneStale(canonicalIds: string[]): void {
+    if (canonicalIds.length === 0) return;
+    const placeholders = canonicalIds.map(() => '?').join(',');
+    this.db
+      .prepare(`DELETE FROM questions WHERE id NOT IN (${placeholders})`)
+      .run(...canonicalIds);
+  }
+
   isEmpty(): boolean {
     const row = this.db
       .prepare<[], { n: number }>('SELECT COUNT(*) AS n FROM questions')

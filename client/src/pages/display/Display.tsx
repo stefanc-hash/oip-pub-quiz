@@ -4,7 +4,7 @@ import { MoonStar, Trophy, Users, Wifi, WifiOff } from 'lucide-react';
 import { useSSE } from '@/hooks/useSSE';
 import { AppShell } from '@/components/AppShell';
 import { Badge } from '@/components/ui/badge';
-import { cn, formatSeconds } from '@/lib/utils';
+import { cn, formatMs } from '@/lib/utils';
 import type { LeaderboardRow } from '@/types';
 
 interface LeaderboardPayload {
@@ -77,7 +77,7 @@ export function Display() {
     <AppShell variant="display">
       <header className="flex items-end justify-between gap-6 flex-wrap">
         <div className="space-y-2">
-          <div className="text-base uppercase tracking-[0.2em] text-[var(--color-fg-muted)]">Pub Quiz · Live</div>
+          <div className="text-base uppercase tracking-[0.2em] text-[var(--color-fg-muted)]">OIP Insurtech Pub Quiz · Live</div>
           <h1 className="text-7xl font-bold tracking-tight">{payload.session.name}</h1>
         </div>
         <div className="flex items-center gap-4">
@@ -116,7 +116,7 @@ export function Display() {
               <div className="text-3xl font-bold truncate">{r.firstName} {r.lastName}</div>
               <div className="text-3xl font-bold tabular-nums text-right">{r.correctCount}</div>
               <div className="text-xl tabular-nums text-right opacity-70">
-                {formatSeconds(r.avgResponseTimeMsOnCorrect)}
+                {formatMs(r.avgResponseTimeMsOnCorrect)}
               </div>
             </li>
           ))}

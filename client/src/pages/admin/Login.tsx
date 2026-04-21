@@ -38,7 +38,7 @@ export function Login({ onLogin }: Props) {
           </div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight">Admin sign in</h1>
-            <p className="text-sm text-[var(--color-fg-muted)] mt-1">Pub Quiz administration</p>
+            <p className="text-sm text-[var(--color-fg-muted)] mt-1">OIP Insurtech Pub Quiz administration</p>
           </div>
         </div>
 

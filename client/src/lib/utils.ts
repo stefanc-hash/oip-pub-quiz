@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatSeconds(ms: number | null): string {
+export function formatMs(ms: number | null): string {
   if (ms === null) return '-';
-  return `${(ms / 1000).toFixed(1)}s`;
+  return `${Math.round(ms).toLocaleString()}ms`;
 }

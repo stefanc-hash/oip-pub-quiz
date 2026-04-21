@@ -77,7 +77,7 @@ export function Sessions({ onLogout, username, onNavigateQuestions }: Props) {
       <header className="flex items-baseline justify-between flex-wrap gap-3">
         <div>
           <div className="text-xs uppercase tracking-wider text-[var(--color-fg-muted)]">
-            Pub Quiz · Admin · {username}
+            OIP Insurtech Pub Quiz · Admin · {username}
           </div>
           <h1 className="text-2xl font-bold tracking-tight">Groups</h1>
         </div>

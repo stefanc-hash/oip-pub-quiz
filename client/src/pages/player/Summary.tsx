@@ -2,7 +2,7 @@ import { Trophy, Target, Clock, Hash } from 'lucide-react';
 import { AppShell } from '@/components/AppShell';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { cn, formatSeconds } from '@/lib/utils';
+import { cn, formatMs } from '@/lib/utils';
 import type { LeaderboardRow } from '@/types';
 
 interface Props {
@@ -34,7 +34,7 @@ export function Summary({ name, totalQuestions, ownAnswers, leaderboard }: Props
         <Stat
           icon={Clock}
           label="Avg time"
-          value={formatSeconds(own?.avgResponseTimeMsOnCorrect ?? null)}
+          value={formatMs(own?.avgResponseTimeMsOnCorrect ?? null)}
         />
         <Stat icon={Hash} label="Rank" value={own ? `#${own.rank}` : '-'} />
       </div>
@@ -85,7 +85,7 @@ function Leaderboard({ rows, highlightParticipantId }: { rows: LeaderboardRow[];
             </div>
             <Badge variant={r.correctCount > 0 ? 'primary' : 'default'}>{r.correctCount}</Badge>
             <div className="text-sm text-[var(--color-fg-muted)] tabular-nums w-12 text-right">
-              {formatSeconds(r.avgResponseTimeMsOnCorrect)}
+              {formatMs(r.avgResponseTimeMsOnCorrect)}
             </div>
           </li>
         );

@@ -1,33 +1,65 @@
-import { useEffect, useState } from 'react';
-import { ArrowLeft, AlertCircle, Trophy } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowLeft, AlertCircle, Trophy, RefreshCw } from 'lucide-react';
 import { adminApi } from '@/api';
 import type { AdminResultsResponse } from '@/types';
 import { AppShell } from '@/components/AppShell';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { formatSeconds } from '@/lib/utils';
+import { formatMs } from '@/lib/utils';
+
+const POLL_MS = 5000;
 
 interface Props { sessionId: number; onBack: () => void }
 
 export function Results({ sessionId, onBack }: Props) {
   const [data, setData] = useState<AdminResultsResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  async function load(showSpinner = false) {
+    if (showSpinner) setRefreshing(true);
+    try {
+      const d = await adminApi.results(sessionId);
+      setData(d);
+      setLastRefresh(new Date());
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'failed');
+    } finally {
+      if (showSpinner) setRefreshing(false);
+    }
+  }
 
   useEffect(() => {
-    let cancelled = false;
-    adminApi.results(sessionId)
-      .then(d => { if (!cancelled) setData(d); })
-      .catch(err => { if (!cancelled) setError(err instanceof Error ? err.message : 'failed'); });
-    return () => { cancelled = true; };
+    load();
+    intervalRef.current = setInterval(() => load(), POLL_MS);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [sessionId]);
 
   return (
     <AppShell variant="wide">
-      <Button variant="ghost" size="sm" className="self-start" onClick={onBack}>
-        <ArrowLeft className="h-4 w-4" />
-        Back to groups
-      </Button>
+      <div className="flex items-center justify-between">
+        <Button variant="ghost" size="sm" className="self-start" onClick={onBack}>
+          <ArrowLeft className="h-4 w-4" />
+          Back to groups
+        </Button>
+        <div className="flex items-center gap-2">
+          {lastRefresh && (
+            <span className="text-xs text-[var(--color-fg-muted)]">
+              Updated {lastRefresh.toLocaleTimeString()}
+            </span>
+          )}
+          <Button variant="ghost" size="icon" disabled={refreshing} onClick={() => load(true)}
+            className="h-8 w-8">
+            <RefreshCw className={`h-3.5 w-3.5 ${refreshing ? 'animate-spin' : ''}`} />
+          </Button>
+        </div>
+      </div>
 
       {error && (
         <div className="flex items-start gap-2 rounded-[var(--radius-md)] bg-[var(--color-incorrect)]/10 border border-[var(--color-incorrect)]/30 p-3 text-sm text-[var(--color-incorrect)]">
@@ -49,7 +81,7 @@ export function Results({ sessionId, onBack }: Props) {
               {data.session.endedAt
                 ? <>Ended {new Date(data.session.endedAt).toLocaleString()}</>
                 : data.session.activatedAt
-                  ? <Badge variant="primary">Active now</Badge>
+                  ? <Badge variant="primary">Active - live</Badge>
                   : 'Not yet activated'}
             </div>
           </header>
@@ -74,8 +106,8 @@ export function Results({ sessionId, onBack }: Props) {
                       <Badge variant={r.correctCount > 0 ? 'primary' : 'default'}>
                         {r.correctCount} correct
                       </Badge>
-                      <div className="w-16 text-right text-sm text-[var(--color-fg-muted)] tabular-nums">
-                        {formatSeconds(r.avgResponseTimeMsOnCorrect)}
+                      <div className="w-20 text-right text-sm text-[var(--color-fg-muted)] tabular-nums">
+                        {formatMs(r.avgResponseTimeMsOnCorrect)}
                       </div>
                     </li>
                   ))}

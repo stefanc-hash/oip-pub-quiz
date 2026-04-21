@@ -14,7 +14,7 @@ export function Landing({ sessionName, onJoin }: Props) {
           Live now
         </Badge>
         <div className="space-y-3">
-          <h1 className="text-5xl font-bold tracking-tight">Pub Quiz</h1>
+          <h1 className="text-4xl font-bold tracking-tight">OIP Insurtech Pub Quiz</h1>
           <p className="text-lg text-[var(--color-fg-muted)]">
             You're joining <strong className="text-[var(--color-primary)]">{sessionName}</strong>
           </p>

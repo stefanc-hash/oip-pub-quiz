@@ -63,7 +63,7 @@ export function Questions({ onBack }: Props) {
       <header className="flex items-baseline justify-between gap-3">
         <div>
           <div className="text-xs uppercase tracking-wider text-[var(--color-fg-muted)]">
-            Pub Quiz · Admin
+            OIP Insurtech Pub Quiz · Admin
           </div>
           <h1 className="text-2xl font-bold tracking-tight">
             Questions
